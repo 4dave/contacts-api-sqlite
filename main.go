@@ -13,26 +13,23 @@ import (
 	"gorm.io/gorm"
 )
 
-func setupRoutes(app *fiber.App) {
+func routes(app *fiber.App) {
 	app.Get("/api/v1/contacts", contacts.GetContacts)
 	app.Get("/api/v1/contact/:id", contacts.GetContact)
 	app.Post("/api/v1/contact", contacts.NewContact)
 	app.Delete("/api/v1/contact/:id", contacts.DeleteContact)
-	app.Put("/api/v1/contact/:id", contacts.EditContact)
+	app.Put("/api/v1/contact/:id", contacts.UpdateContact)
 }
 
 func initDatabase() {
 	var err error
 	database.DBConn, err = gorm.Open(sqlite.Open("contacts.db"), &gorm.Config{})
-
 	if err != nil {
 		panic("Failed to connect to database")
 	}
 	fmt.Println("Database connection successfully opened")
-
 	database.DBConn.AutoMigrate(&contacts.Contact{})
 	fmt.Println("Database Migrated")
-
 }
 
 func main() {
@@ -40,6 +37,6 @@ func main() {
 	app.Use(cors.New())
 	initDatabase()
 	// defer database.DBConn.Close()
-	setupRoutes(app)
+	routes(app)
 	app.Listen(":8000")
 }

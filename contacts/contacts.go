@@ -40,14 +40,14 @@ func NewContact(c *fiber.Ctx) error {
 	return c.JSON(contact)
 }
 
-func EditContact(c *fiber.Ctx) error {
+func UpdateContact(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 	contact := new(Contact)
-	if err := c.BodyParser(contact); err != nil {
+	if err := db.Where("id", id).First(&contact).Error; err != nil {
 		c.SendStatus(500)
 	}
-	db.First(&contact, id)
+	c.BodyParser(contact)
 	db.Save(&contact)
 	return c.JSON(contact)
 }
