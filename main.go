@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"contacts-api/contacts"
-	"contacts-api/database"
+	"contacts-api-sqlite/contacts"
+	"contacts-api-sqlite/database"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"

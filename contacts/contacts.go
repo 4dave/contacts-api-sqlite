@@ -1,7 +1,7 @@
 package contacts
 
 import (
-	"contacts-api/database"
+	"contacts-api-sqlite/database"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"

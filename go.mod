@@ -1,4 +1,4 @@
-module contacts-api
+module contacts-api-sqlite
 
 go 1.16
 
