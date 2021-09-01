@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"contacts-api-sqlite/contacts"
 	"contacts-api-sqlite/database"
@@ -32,11 +34,21 @@ func initDatabase() {
 	fmt.Println("Database Migrated")
 }
 
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+	return port
+}
+
 func main() {
 	app := fiber.New()
 	app.Use(cors.New())
 	initDatabase()
 	// defer database.DBConn.Close()
 	routes(app)
-	app.Listen(":8000")
+	port := getPort()
+	app.Listen(":" + port)
 }
